@@ -1,4 +1,4 @@
-class calculator {
+class htmlPart {
     constructor(e, bootClass, idName, styleInfo, dispText) {
         this.e = document.createElement(e);
         this.e.className = bootClass;
@@ -17,17 +17,18 @@ class calculator {
 }
 
 
-//put the Calculator on the page
-//window.onload = function () { buildCalcDisplay() }
 
 class initHTML() {
-
+    
+    //put the Calculator on the page
+    //window.onload = function () { buildCalcDisplay() }
+    
     // build array to display on keys then don't use it!
     //let keyStr = "0.=123-456X789/CE<H";
     //let keyArr = keyStr.split("");
     //build array of key pics to pretty it up
     //console.log('now playing', keyArr);
-    
+
     let c = new htmlPart("div", "container", "calcCont", "background-color: lightblue;", "");
     document.body.appendChild(c.e);
 
