@@ -11,9 +11,10 @@ class htmlPart {
 
 
 class Calculator {
-    constructor(dispArr, currOpr, histArr) {
+    constructor(dispArr, runningTot, workOp, histArr) {
         this.dispArr = dispArr;
-        this.currOpr = currOpr;
+        this.runningTot = runningTot;
+        this.workOp = workOp;
         this.histArr = histArr;
     }
 
@@ -29,8 +30,9 @@ class Calculator {
     initCalc() {
         //console.log("INSIDE initCalc");
         //this.dispArr;
-        //let currOpr = '';
-        //let histArr = [];
+        aNewCalculator.runningTot = 0;
+        aNewCalculator.workOp = '';
+        aNewCalculator.histArr = [];
         console.log(this.dispArr);
         console.log("INSIDE initCalc: disp="+this.dispArr+" curr="+ this.currOpr
                 +" histArr="+this.histArr);
@@ -101,11 +103,11 @@ class Calculator {
         KeyMinus.e.addEventListener("click", this.operatorFun);
         operRow.appendChild(KeyMinus.e);
 
-        let KeyMult = new htmlPart("div", "col border border-dark operCL", "&#x22C7", "", "&#x22C7");
+        let KeyMult = new htmlPart("div", "col border border-dark operCL", "X", "", "&#x22C7");
         KeyMult.e.addEventListener("click", this.operatorFun);
         operRow.appendChild(KeyMult.e);
 
-        let KeyDivi = new htmlPart("div", "col border border-dark operCl", "&#x00F7", "", "&#x00F7");
+        let KeyDivi = new htmlPart("div", "col border border-dark operCl", "/", "", "&#x00F7");
         KeyDivi.e.addEventListener("click", this.operatorFun);
         operRow.appendChild(KeyDivi.e);
         
@@ -125,13 +127,18 @@ class Calculator {
         //        ' Display=' + aNewCalculator.dispArr);
 
         let pressedNum = this.innerHTML;
+        let displayArr = []; 
 
+        displayArr = aNewCalculator.dispArr;
+        
+        console.log('numFUN: dispArr='+aNewCalculator.dispArr.join(""));
+        
         if (aNewCalculator.dispArr.length == 1 && aNewCalculator.dispArr[0] == '0') {
             aNewCalculator.dispArr[0] = pressedNum;
         } else {
             aNewCalculator.dispArr.push(pressedNum);
+            aNewCalculator.dispArr= displayArr;
         }
-        console.log('displayNum='+aNewCalculator.dispArr.join(""));
 
         document.querySelector('#calcDisp').innerHTML = aNewCalculator.dispArr.join("");
     }
@@ -162,31 +169,60 @@ class Calculator {
         aNewCalculator.dispArr = [0];
         console.log("CLEAR: "+aNewCalculator.dispArr);
         document.querySelector('#calcDisp').innerHTML = aNewCalculator.dispArr[0];
+        aNewCalculator.workOp = '';
+        //aNewCalculator.currOpr = '';
         //console.log('display ='+ele.innerHTML)
     }
 
     
     operatorFun() {
         //console.log('OPERATOR pressed');
-        console.log('OPERATOR currOpr=' + aNewCalculator.currOpr + ' pressed id=' + this.id);
         let displayNum = aNewCalculator.dispArr.join("");
-        if (aNewCalculator.currOpr) {
+        let workOp = aNewCalculator.workOp;
+        let runningTot = aNewCalculator.runningTot;
+        //let currOp = aNewCalculator.currOp;
+        console.log('OPERATOR displayNum='+displayNum+' workOp='+workOp+" runningTot="+runningTot+'id='+this.id);
+
+        console.log ('empty='+""+", NULL="+null);
+
+        if (workOp != '') {
             //something in currOpr   DO THE MATH !!             i
-            console.log('id='+this.id+" calcDisp="+aNewCalculator.calcDisp);
-            if ( this.id === "&#x22C7" && displayNum === 0){
+            console.log('AAA id='+this.id+" calcDisp="+displayNum);
+
+            //if ( this.id === "/" && displayNum === 0){
                 //aNewCalculator.calcDisp = "ERR &#x00f7 by 0";
-                console.log("DIVISION BY ZERO");
+                //console.log("DIVISION BY ZERO");
                 //TODO add err popup here & err text handling code to handle text msg
-            } 
-            document.querySelector('#calcDisp').innerHTML = this.id;
-            console.log('this.currOpr ='+this.currOpr+' NULL instance.currOpr='+aNewCalculator.currOpr);
+            //} else {
+                //aNewCalculator.histArr.unshift(displayNum);
+
+                runningTot = runningTot + displayNum; 
+                document.querySelector('#calcDisp').innerHTML = runningTot;
+                aNewCalculator.workOp = this.id;
+                aNewCalculator.dispArr = runningTot.split('');
+                aNewCalculator.runningTot = runningTot;
+            //}
+            //document.querySelector('#calcDisp').innerHTML = this.id;
+            console.log('MATH .histArr[0]=' + aNewCalculator.histArr[0] + 
+                ' .dispArr=' + aNewCalculator.dispArr +
+                ' .workOp=' + aNewCalculator.workOp + 
+                ' .currOp=' + aNewCalculator.currOpr);
         } else {
             // currOpr is NULL! == EMPTY
-            //set current display to be acted upon
-            aNewCalculator.histArr.unshift(aNewCalculator.calcDisp);
-            aNewCalculator.currOpr = this.id;
-            document.querySelector('#calcDisp').innerHTML = this.id;
-            console.log('hist[0] =' + aNewCalculator.histArr[0] + ' FILLED instance.currOpr='+this.id);
+            //if ( this.id != "key=") {
+                
+                //set current display to be acted upon
+                //aNewCalculator.histArr.unshift(aNewCalculator.calcDisp);
+                aNewCalculator.workOp = this.id;
+                aNewCalculator.currOpr = '';
+                aNewCalculator.runningTot = displayNum;
+                aNewCalculator.dispArr = this.id;
+                //document.querySelector('#calcDisp').innerHTML = this.id;
+            console.log('NO-MATH .histArr[0]=' + aNewCalculator.histArr[0] + 
+                ' .dispArr=' + aNewCalculator.dispArr+
+                ' .work=' + aNewCalculator.workOp + 
+                ' .runningTot=' + aNewCalculator.runningTot);
+            //}
         }
     }
 
