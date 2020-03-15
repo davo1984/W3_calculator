@@ -93,19 +93,19 @@ class Calculator {
         KeyClr.e.addEventListener("click", this.clrFun);
         operRow.appendChild(KeyClr.e);
 
-        let KeyPlus = new htmlPart("div", "col border border-dark", "keyPlus", "", "+");
+        let KeyPlus = new htmlPart("div", "col border border-dark", "+", "", "+");
         KeyPlus.e.addEventListener("click", this.operatorFun);
         operRow.appendChild(KeyPlus.e);
 
-        let KeyMinus = new htmlPart("div", "col border border-dark", "keyMinus", "", "-");
+        let KeyMinus = new htmlPart("div", "col border border-dark", "-", "", "-");
         KeyMinus.e.addEventListener("click", this.operatorFun);
         operRow.appendChild(KeyMinus.e);
 
-        let KeyMult = new htmlPart("div", "col border border-dark operCL", "keyMult", "", "&#x22C7");
+        let KeyMult = new htmlPart("div", "col border border-dark operCL", "&#x22C7", "", "&#x22C7");
         KeyMult.e.addEventListener("click", this.operatorFun);
         operRow.appendChild(KeyMult.e);
 
-        let KeyDivi = new htmlPart("div", "col border border-dark operCl", "keyDivide", "", "&#x00F7");
+        let KeyDivi = new htmlPart("div", "col border border-dark operCl", "&#x00F7", "", "&#x00F7");
         KeyDivi.e.addEventListener("click", this.operatorFun);
         operRow.appendChild(KeyDivi.e);
         
@@ -117,12 +117,12 @@ class Calculator {
     // deal with a number key press 0-9
     numFun() {
         //console.log('number pressed'); 
-        console.log(this.dispArr);   //undefined!
-        console.log("numFun: disp=" + this.dispArr + " curr=" + this.currOpr
-            + " histArr=" + this.histArr);
+        //console.log(this.dispArr);   //undefined!
+        //console.log("numFun: disp=" + this.dispArr + " curr=" + this.currOpr
+        //    + " histArr=" + this.histArr);
         
-        console.log('number ' + this.innerHTML + ' pressed id=' + this.id + 
-                ' Display=' + aNewCalculator.dispArr);
+        //console.log('number ' + this.innerHTML + ' pressed id=' + this.id + 
+        //        ' Display=' + aNewCalculator.dispArr);
 
         let pressedNum = this.innerHTML;
 
@@ -168,8 +168,26 @@ class Calculator {
     
     operatorFun() {
         //console.log('OPERATOR pressed');
-        console.log('OPERATOR ' + this.innerHTML + ' pressed id=' + this.id);
-        
+        console.log('OPERATOR currOpr=' + aNewCalculator.currOpr + ' pressed id=' + this.id);
+        let displayNum = aNewCalculator.dispArr.join("");
+        if (aNewCalculator.currOpr) {
+            //something in currOpr   DO THE MATH !!             i
+            console.log('id='+this.id+" calcDisp="+aNewCalculator.calcDisp);
+            if ( this.id === "&#x22C7" && displayNum === 0){
+                //aNewCalculator.calcDisp = "ERR &#x00f7 by 0";
+                console.log("DIVISION BY ZERO");
+                //TODO add err popup here & err text handling code to handle text msg
+            } 
+            document.querySelector('#calcDisp').innerHTML = this.id;
+            console.log('this.currOpr ='+this.currOpr+' NULL instance.currOpr='+aNewCalculator.currOpr);
+        } else {
+            // currOpr is NULL! == EMPTY
+            //set current display to be acted upon
+            aNewCalculator.histArr.unshift(aNewCalculator.calcDisp);
+            aNewCalculator.currOpr = this.id;
+            document.querySelector('#calcDisp').innerHTML = this.id;
+            console.log('hist[0] =' + aNewCalculator.histArr[0] + ' FILLED instance.currOpr='+this.id);
+        }
     }
 
     onclick() {
@@ -177,7 +195,7 @@ class Calculator {
     }
 } // ending CALCULATOR
 
-let aNewCalculator = new Calculator([0], null,['123','+','456']);
+let aNewCalculator = new Calculator([0], null,[]);
 console.log(aNewCalculator);
 console.log("a-1");
 aNewCalculator.onclick();
