@@ -7,9 +7,6 @@ class htmlPart {
         this.e.innerHTML = dispText;
     }
 }
-
-
-
 class Calculator {
     constructor(dispArr, runningTot, workOp, numState) {
         this.dispArr = dispArr;
@@ -17,7 +14,6 @@ class Calculator {
         this.workOp = workOp;
         this.numState = numState;
     }
-
     //buildUI() {
     //  create  element
     //var e = document.createElement(this.e);
@@ -63,7 +59,7 @@ class Calculator {
 
         // add the 3 keys on the bottom
         let KeyTileEqu = new htmlPart("div", "col-4 border border-dark", "key=", "", "=");
-        KeyTileEqu.e.addEventListener("click", this.operator);
+        KeyTileEqu.e.addEventListener("click", this.performOperation);
         dFlexRev.appendChild(KeyTileEqu.e);
 
         let KeyTileDot = new htmlPart("div", "col-4 border border-dark dotCl", "key.", "", ".");
@@ -194,14 +190,18 @@ console.log('inside digitAdd .numState='+aNewCalculator.numState);
             } else if (workOp === 'X') {
                 runningTot = +runningTot * +displayNum;
             } else if (workOp === '/') {
-                if ( displayNum === 0 ) {
+                if ( +displayNum == 0 || displayNum == '0') {
                     console.log("DIVISION BY ZERO");
-                    runningTot = "ERROR division by 0!"; //modal
+                    //modal popup! TODO  
+                    // once popup is done return display to running total &
+                    // continue w/o return
+                    document.querySelector('#calcDisp').innerHTML = "DIVISION BY ZERO";
+                    aNewCalculator.numState = 0;
+                    return;
                 } {
                     runningTot = +runningTot / +displayNum;
                 }
             }
-            aNewCalculator.numState = 0;
             //console.log('runningTot=' + runningTot + '<displayNum='+displayNum+"<");
             document.querySelector('#calcDisp').innerHTML = runningTot;
             aNewCalculator.workOp = this.id;
@@ -211,6 +211,7 @@ console.log('inside digitAdd .numState='+aNewCalculator.numState);
             if (this.id != 'key=') {
                 aNewCalculator.workOp = this.id;
             } else {
+                console.log ('EQUAL KEY WAS PRESSED');
                 // TODO 
             }
             //document.querySelector('#calcDisp').innerHTML = this.id;
@@ -219,27 +220,19 @@ console.log('inside digitAdd .numState='+aNewCalculator.numState);
                 ' .workOp=' + aNewCalculator.workOp + 
                 ' .currOp=' + aNewCalculator.currOpr);
         } else {
-            // currOpr is NULL! == EMPTY
-            //if ( this.id != "key=") {
-                
                 //set current display to be acted upon
                 aNewCalculator.runningTot = displayNum;
                 aNewCalculator.workOp = this.id;
                 aNewCalculator.currOpr = '';
                 aNewCalculator.numberState = 0;
-            // console.log('NO-MATH .numState=' + aNewCalculator.numState + 
-            //     ' .dispArr=' + aNewCalculator.dispArr+
-            //     ' .work=' + aNewCalculator.workOp + 
-            //     ' .runningTot=' + aNewCalculator.runningTot);
-            //}
         }
-            aNewCalculator.numState = 0;
-            console.log(
-                " runningTot=" + aNewCalculator.runningTot +
-                ' workOp=' + aNewCalculator.workOp +
-                ' displayNum=' + displayNum +
-                ' dispArr=' + aNewCalculator.dispArr +
-                ' .numState=' + aNewCalculator.numState);
+        aNewCalculator.numState = 0;
+        console.log(
+            " runningTot=" + aNewCalculator.runningTot +
+            ' workOp=' + aNewCalculator.workOp +
+            ' displayNum=' + displayNum +
+            ' dispArr=' + aNewCalculator.dispArr +
+            ' .numState=' + aNewCalculator.numState);
 
     }
 
@@ -251,8 +244,8 @@ console.log('inside digitAdd .numState='+aNewCalculator.numState);
 let aNewCalculator = new Calculator([0], null,[]);
 console.log(aNewCalculator);
 console.log("a-1");
-aNewCalculator.onclick();
+aNewCalculator.onclick();  // works
 console.log("X-1");
-aNewCalculator.onclick;
+aNewCalculator.onclick;    // doesn't work
 console.log("X-2");
 aNewCalculator.initCalc();
