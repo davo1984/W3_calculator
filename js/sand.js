@@ -56,7 +56,7 @@ function buildCalcDisplay() {
     }
 
     KeyTileEqu = new htmlPart("div", "col-4 border border-dark", "key=", "", "=");
-    KeyTileEqu.e.addEventListener("click", operatorFun);
+    KeyTileEqu.e.addEventListener("click", performOperation);
     dFlexRev.appendChild(KeyTileEqu.e);
 
     KeyTileDot = new htmlPart("div", "col-4 border border-dark dotCl", "key.", "", ".");
@@ -78,19 +78,19 @@ function buildCalcDisplay() {
     operRow.appendChild(KeyClr.e);
 
     KeyPlus = new htmlPart("div", "col border border-dark", "keyPlus", "", "+");
-    KeyPlus.e.addEventListener("click", operatorFun);
+    KeyPlus.e.addEventListener("click", performOperation);
     operRow.appendChild(KeyPlus.e);
 
     KeyMinus = new htmlPart("div", "col border border-dark", "keyMinus", "", "-");
-    KeyMinus.e.addEventListener("click", operatorFun);
+    KeyMinus.e.addEventListener("click", performOperation);
     operRow.appendChild(KeyMinus.e);
 
     KeyMult = new htmlPart("div", "col border border-dark operCL", "keyMult", "", "&#x22C7");
-    KeyMult.e.addEventListener("click", operatorFun);
+    KeyMult.e.addEventListener("click", performOperation);
     operRow.appendChild(KeyMult.e);
 
     KeyDivi = new htmlPart("div", "col border border-dark operCl", "keyDivide", "", "&#x00F7");
-    KeyDivi.e.addEventListener("click", operatorFun);
+    KeyDivi.e.addEventListener("click", performOperation);
     operRow.appendChild(KeyDivi.e);
 
     KeyBS = new htmlPart("div", "col border border-dark", "keyBS", "", "&#x21E6"); // "&#x21FD"); //"<");
@@ -116,7 +116,7 @@ function clrFun() {
     console.log('clrFun ' + this.innerHTML + ' pressed id=' + this.id);
 }
 
-function operatorFun() {
+function performOperation() {
     //console.log('OPERATOR pressed');
     console.log('OPERATOR ' + this.innerHTML + ' pressed id=' + this.id);
 }
