@@ -32,72 +32,77 @@ class Calculator {
         console.log("INSIDE initCalc: disp="+this.dispArr+" curr="+ this.currOpr
                 +" numState="+this.numState);
 
-        let c = new htmlPart("div", "container", "calcCont", "background-color: lightblue;", "");
+        let c = new htmlPart("div", "container h-100 p-auto m-auto font-weight-bolder", "calcCont", "width: 500px; background-color: lightblue;", "");
         document.body.appendChild(c.e);
 // "background-color: tan", 
-        let r1 = new htmlPart("div", "row border border-dark", "dispRow","", ""); //"QQQ)";
+        let r1 = new htmlPart("div", "row border border-dark", "dispRow","height: 400px", ""); //"QQQ)";
         calcCont.appendChild(r1.e);
 
-        let nineColV = new htmlPart("div", "col-9", "nineCol", "", "");
+        let nineColV = new htmlPart("div", "col-9 h-100", "nineCol", "", "");
         dispRow.appendChild(nineColV.e);
 
-        let cDisp = new htmlPart("div", "col-9 border border-dark mx-auto text-right", 
-                "calcDisp", "background-color: ivory", this.dispArr[0]);
+        let cDisp = new htmlPart("div", "col-9 border border-dark m-auto text-right", 
+            "calcDisp", "background-color: ivory; height: 45px;", this.dispArr[0]);
         nineCol.appendChild(cDisp.e);
 
-        let calcBodyRow = new htmlPart("div", "row d-flex flex-sm-row-reverse text-center", "dFlexRev", "", "");
+        let calcBodyRow = new htmlPart("div", "row d-flex flex-sm-row-reverse text-center", "dFlexRev", "height: 45px;", "");
         nineCol.appendChild(calcBodyRow.e);
 
         // build number body of calculator 1-9
         for (let i = 9; i > 0; i--) {
             let keyID = "key" + i;
             //console.log("key=" + keyID);
-            let keyTile = new htmlPart("button", "col-4 border border-dark border-rounded py-auto", keyID, "", i);
+            let keyTile = new htmlPart("button", "col-4 btn btn-light border border-dark border-rounded py-auto", keyID, "", i);
             keyTile.e.addEventListener("click", this.digitAdd);
             dFlexRev.appendChild(keyTile.e);
         }
 
         // add the 3 keys on the bottom
-        let KeyTileEqu = new htmlPart("div", "col-4 border border-dark", "key=", "", "=");
+        let KeyTileEqu = new htmlPart("button", "col-4 btn btn-light border border-dark border-rounded", "key=", "", "=");
         KeyTileEqu.e.addEventListener("click", this.performOperation);
         dFlexRev.appendChild(KeyTileEqu.e);
 
-        let KeyTileDot = new htmlPart("div", "col-4 border border-dark dotCl", "key.", "", ".");
+        let KeyTileDot = new htmlPart("button", "col-4 btn btn-light border border-dark border-rounded dotCl", "key.", "", ".");
         KeyTileDot.e.addEventListener("click", this.insertDecimal);
         dFlexRev.appendChild(KeyTileDot.e);
 
-        let KeyTile0 = new htmlPart("button", "col-4 border border-dark Allison", "key0", "", "0");
+        let KeyTile0 = new htmlPart("button", "col-4 btn btn-light border border-dark border-rounded", "key0", "", "0");
         KeyTile0.e.addEventListener("click", this.digitAdd);
         dFlexRev.appendChild(KeyTile0.e);
 
         // operator key column, then the keys
         let OperColV = new htmlPart("div", "col-3 text-center", "operCol", "", "");
         dispRow.appendChild(OperColV.e);
-
+        
         let operRowV = new htmlPart("div", "row d-flex flex-column", "operRow", "", "");
         operCol.appendChild(operRowV.e);
+        
+        // let KeyClr = new htmlPart("div", "col border border-dark", "operRowV", "", "Clr");
+        // KeyClr.e.addEventListener("click", this.clearAll);
+        // operRow.appendChild(KeyClr.e);
 
-        let KeyClr = new htmlPart("div", "col border border-dark", "operRowV", "", "Clr");
+        let KeyClr = new htmlPart("button", "col btn btn-light border border-dark border-rounded ", "operRowV", "", "Clr");
         KeyClr.e.addEventListener("click", this.clearAll);
         operRow.appendChild(KeyClr.e);
+        //<button type="button" class="btn">Basic</button>
 
-        let KeyPlus = new htmlPart("div", "col border border-dark", "+", "", "+");
+        let KeyPlus = new htmlPart("button", "col btn btn-light border border-dark border-rounded", "+", "", "+");
         KeyPlus.e.addEventListener("click", this.performOperation);
         operRow.appendChild(KeyPlus.e);
 
-        let KeyMinus = new htmlPart("div", "col border border-dark", "-", "", "-");
+        let KeyMinus = new htmlPart("button", "col btn btn-light border border-dark border-rounded", "-", "", "-");
         KeyMinus.e.addEventListener("click", this.performOperation);
         operRow.appendChild(KeyMinus.e);
 
-        let KeyMult = new htmlPart("div", "col border border-dark operCL", "X", "", "&#x22C7");
+        let KeyMult = new htmlPart("button", "col btn btn-light border border-dark border-rounded operCL", "X", "", "&#x22C7");
         KeyMult.e.addEventListener("click", this.performOperation);
         operRow.appendChild(KeyMult.e);
 
-        let KeyDivi = new htmlPart("div", "col border border-dark operCl", "/", "", "&#x00F7");
+        let KeyDivi = new htmlPart("button", "col btn btn-light border border-dark border-rounded operCl", "/", "", "&#x00F7");
         KeyDivi.e.addEventListener("click", this.performOperation);
         operRow.appendChild(KeyDivi.e);
         
-        let KeyBS = new htmlPart("div", "col border border-dark", "keyBS", "", "&#x21E6"); // "&#x21FD"); //"<");
+        let KeyBS = new htmlPart("button", "col btn btn-light border border-dark border-rounded", "keyBS", "", "&#x21E6"); // "&#x21FD"); //"<");
         KeyBS.e.addEventListener("click", this.eraseDigit);
         operRow.appendChild(KeyBS.e);
     }
@@ -186,7 +191,7 @@ console.log('inside digitAdd .numState='+aNewCalculator.numState);
             if (workOp === '+') {
                 runningTot = +runningTot + +displayNum; 
             } else if (workOp === '-') {
-                runningTot = +runningTot - +displayNum;
+                runningTot = parseInt(runningTot) - parseInt(displayNum);
             } else if (workOp === 'X') {
                 runningTot = +runningTot * +displayNum;
             } else if (workOp === '/') {
@@ -205,7 +210,7 @@ console.log('inside digitAdd .numState='+aNewCalculator.numState);
             //console.log('runningTot=' + runningTot + '<displayNum='+displayNum+"<");
             document.querySelector('#calcDisp').innerHTML = runningTot;
             aNewCalculator.workOp = this.id;
-            runningTot = '' + runningTot;
+            runningTot = runningTot.toString();
             aNewCalculator.dispArr = runningTot.split('');
             aNewCalculator.runningTot = runningTot;
             if (this.id != 'key=') {
