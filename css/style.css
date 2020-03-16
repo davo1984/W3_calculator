@@ -1,0 +1,27 @@
+.html {
+    background-color: aqua;
+    background-image: url("./../img/physics-formulas-on-chalkboard.jpg");
+
+}
+
+.body {
+    background-color: greenyellow;
+    background-image: url("./../img/physics-formulas-on-chalkboard.jpg");
+}
+
+.app {
+    /* background-color: purple; */
+    background-image: url("./../img/physics-formulas-on-chalkboard.jpg");
+}
+
+.container {
+    background-image: url("./../img/physics-formulas-on-chalkboard.jpg");
+}
+
+.div {
+    background-color: hotpink;
+}
+.button {
+    background-color: royalblue;
+    color: red;
+}
