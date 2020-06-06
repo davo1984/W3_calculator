@@ -1,6 +1,8 @@
 # W3_calcultor
 
-// calculator javascript pseudocode
+Purpose is to learn about functions, event handling, computational thinking and handling mathmatics, including built-in functions. To do this I built a working calculator. Works just like the first solar powered pocket calculator I carried in my pocket all the way through college and lived in my car's glovebox for many years afterwards for calculating fuel milage.
+
+# Calculator JavaScript Pseudocode
 
 //setup == **masterInit**
 //  build button tile array display text (eg "5" | "+")
